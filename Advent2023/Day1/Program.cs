@@ -4,8 +4,8 @@ int sum = 0;
 
 foreach (string calibration in calibrations)
 {
-    char firstDigit = calibration.First(char.IsNumber);
-    char lastDigit = calibration.Last(char.IsNumber);
+    char firstDigit = calibration.First(char.IsDigit);
+    char lastDigit = calibration.Last(char.IsDigit);
 
     sum += int.Parse($"{firstDigit}{lastDigit}");
 }
@@ -20,10 +20,10 @@ foreach (string calibration in calibrations)
     char lastDigit = new char();
     int firstDigitPosition;
     int lastDigitPosition;
-    if (calibration.Any(char.IsNumber))
+    if (calibration.Any(char.IsDigit))
     {
-        firstDigit = calibration.First(char.IsNumber);
-        lastDigit = calibration.Last(char.IsNumber);
+        firstDigit = calibration.First(char.IsDigit);
+        lastDigit = calibration.Last(char.IsDigit);
         firstDigitPosition = calibration.IndexOf(firstDigit);
         lastDigitPosition = calibration.LastIndexOf(lastDigit);
 
