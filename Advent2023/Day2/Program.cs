@@ -27,13 +27,13 @@ foreach (string game in games)
             switch (subsetSegment[i].Trim().Split(" ").Last())
             {
                 case "blue":
-                    subset.Blue = int.Parse(subsetSegment[i].Trim().Split(" ").First());
+                    subset.Blue += int.Parse(subsetSegment[i].Trim().Split(" ").First());
                     break;
                 case "red":
-                    subset.Red = int.Parse(subsetSegment[i].Trim().Split(" ").First());
+                    subset.Red += int.Parse(subsetSegment[i].Trim().Split(" ").First());
                     break;
                 case "green":
-                    subset.Green = int.Parse(subsetSegment[i].Trim().Split(" ").First());
+                    subset.Green += int.Parse(subsetSegment[i].Trim().Split(" ").First());
                     break;
             }
         }
@@ -60,8 +60,8 @@ class Game
 
     public bool Possible(Subset pool)
     {
-        return (Subsets.Sum(s => s.Blue) <= pool.Blue & Subsets.Sum(s => s.Red) <= pool.Red &
-                Subsets.Sum(s => s.Green) <= pool.Green);
+        return ((Subsets.Sum(s => s.Blue) <= pool.Blue) & (Subsets.Sum(s => s.Red) <= pool.Red) &
+                (Subsets.Sum(s => s.Green) <= pool.Green));
     }
 }
 
