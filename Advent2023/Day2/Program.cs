@@ -14,10 +14,14 @@ foreach (string game in games)
 {
     string gameCopy = game;
     gameCopy = gameCopy.Replace("Game ", String.Empty);
+
     int id = int.Parse(gameCopy.Substring(0, gameCopy.IndexOf(":")));
-    gameCopy = gameCopy.Substring(gameCopy.IndexOf(":")+2);
+
+    gameCopy = gameCopy.Substring(gameCopy.IndexOf(":") + 2);
     string[] subsetStrings = gameCopy.Split(";");
-    Game gameObject = new Game() {Id = id};
+
+    Game gameObject = new Game() { Id = id };
+
     foreach (string subsetString in subsetStrings)
     {
         string[] subsetSegment = subsetString.Trim().Split(",");
@@ -35,6 +39,8 @@ foreach (string game in games)
                 case "green":
                     subset.Green += int.Parse(subsetSegment[i].Trim().Split(" ").First());
                     break;
+                default:
+                    throw new Exception("Unknown colour");
             }
         }
         gameObject.Subsets.Add(subset);
@@ -42,7 +48,7 @@ foreach (string game in games)
     GamesList.Add(gameObject);
 }
 
-Subset pool = new Subset() {Blue = 14, Green = 13, Red = 12};
+Subset pool = new Subset() { Blue = 14, Green = 13, Red = 12 };
 
 Console.WriteLine(GamesList.Count(g => g.Possible(pool)));
 Console.WriteLine(GamesList.Where(g => g.Possible(pool)).Sum(g => g.Id));
@@ -50,19 +56,21 @@ Console.ReadLine();
 
 class Game
 {
-    public Game()
-    {
-        Subsets = new List<Subset>();
-    }
-
     public int Id { get; set; }
-    public List<Subset> Subsets { get; set; }
+    public List<Subset> Subsets { get; set; } = new();
 
     public bool Possible(Subset pool)
     {
-        return ((Subsets.Sum(s => s.Blue) <= pool.Blue) & (Subsets.Sum(s => s.Red) <= pool.Red) &
-                (Subsets.Sum(s => s.Green) <= pool.Green));
+
+        if (Subsets.Select(s => s.Blue).Any(b => b > pool.Blue) |
+            Subsets.Select(s => s.Green).Any(g => g > pool.Green) | Subsets.Select(s => s.Red).Any(r => r > pool.Red))
+        {
+            return false;
+        }
+
+        return true;
     }
+
 }
 
 class Subset
