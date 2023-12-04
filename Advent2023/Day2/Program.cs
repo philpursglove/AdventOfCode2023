@@ -52,6 +52,7 @@ Subset pool = new Subset() { Blue = 14, Green = 13, Red = 12 };
 
 Console.WriteLine(GamesList.Count(g => g.Possible(pool)));
 Console.WriteLine(GamesList.Where(g => g.Possible(pool)).Sum(g => g.Id));
+Console.WriteLine(GamesList.Sum(g => g.Power()));
 Console.ReadLine();
 
 class Game
@@ -69,6 +70,11 @@ class Game
         }
 
         return true;
+    }
+
+    public int Power()
+    {
+        return Subsets.Max(s => s.Blue) * Subsets.Max(s => s.Green) * Subsets.Max(s => s.Red);
     }
 
 }
