@@ -13,6 +13,25 @@
 //    ".664.598.."
 //};
 
+List<Char> symbols = new List<char>();
+
+foreach (string line in input)
+{
+    foreach (char c in line)
+    {
+        if (Char.IsDigit(c) | c == '.')
+        {
+        }
+        else
+        {
+            if (!symbols.Contains(c))
+            {
+                symbols.Add(c);
+            }
+        }
+    }
+}
+
 List<List<(int start, int end)>> numbersBoundsLists = new List<List<(int start, int end)>>();
 
 foreach (string line in input)
@@ -42,21 +61,15 @@ foreach (string line in input)
             }
         }
     }
+
+    if (inANumber)
+    {
+        numberBounds.Add(new (start, line.Length - 1));
+    }
     numbersBoundsLists.Add(numberBounds);
 }
 
-List<char> symbols = new List<char>
-{
-    '*',
-    '#',
-    '$',
-    '+',
-    '=',
-    '&',
-    '@',
-    '/',
-    '-'
-};
+
 
 List<int> partNumbers = new List<int>();
 
@@ -131,7 +144,10 @@ for (int i = 0; i < numbersBoundsLists.Count; i++)
         {
             for (int j = lineAboveStart; j <= lineAboveEnd; j++)
             {
-                boundaryChars.AddRange(input[i - 1].Substring(j, 1));
+                if (j < input[i - 1].Length)
+                {
+                    boundaryChars.AddRange(input[i - 1].Substring(j, 1));
+                }
             }
         }
 
@@ -139,12 +155,18 @@ for (int i = 0; i < numbersBoundsLists.Count; i++)
         {
             for (int j = lineBelowStart; j <= lineBelowEnd; j++)
             {
-                boundaryChars.AddRange(input[i + 1].Substring(j, 1));
+                if (j < input[i + 1].Length)
+                {
+                    boundaryChars.AddRange(input[i + 1].Substring(j, 1));
+                }
             }
 
         }
         boundaryChars.AddRange(input[i].Substring(leftSide, 1));
-        boundaryChars.AddRange(input[i].Substring(rightSide, 1));
+        if (rightSide < input[i].Length)
+        {
+            boundaryChars.AddRange(input[i].Substring(rightSide, 1));
+        }
         boundaryChars.RemoveAll(c => c == '.');
 
         if (boundaryChars.Any(c => symbols.Contains(c)))
