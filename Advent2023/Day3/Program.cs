@@ -32,11 +32,12 @@ foreach (string line in input)
     }
 }
 
-List<List<(int start, int end)>> numbersBoundsLists = new List<List<(int start, int end)>>();
+List<List<(int start, int end, int lineNumber)>> numbersBoundsLists = new List<List<(int start, int end, int lineNumber)>>();
 
+int lineNumber = 0;
 foreach (string line in input)
 {
-    List<(int start, int end)> numberBounds = new List<(int start, int end)>();
+    List<(int start, int end, int lineNumber)> numberBounds = new List<(int start, int end, int lineNumber)>();
     bool inANumber = false;
 
     int start = 0;
@@ -56,7 +57,7 @@ foreach (string line in input)
             if (inANumber)
             {
                 end = i - 1;
-                numberBounds.Add(new(start, end));
+                numberBounds.Add(new(start, end, lineNumber));
                 inANumber = false;
             }
         }
@@ -64,9 +65,10 @@ foreach (string line in input)
 
     if (inANumber)
     {
-        numberBounds.Add(new (start, line.Length - 1));
+        numberBounds.Add(new(start, line.Length - 1, lineNumber));
     }
     numbersBoundsLists.Add(numberBounds);
+    lineNumber++;
 }
 
 
@@ -75,7 +77,7 @@ List<int> partNumbers = new List<int>();
 
 for (int i = 0; i < numbersBoundsLists.Count; i++)
 {
-    List<(int start, int end)> bounds = numbersBoundsLists[i];
+    List<(int start, int end, int lineNumber)> bounds = numbersBoundsLists[i];
 
     foreach (var bound in bounds)
     {
@@ -179,3 +181,35 @@ for (int i = 0; i < numbersBoundsLists.Count; i++)
 }
 Console.WriteLine(partNumbers.Sum());
 Console.ReadLine();
+
+List<(int start, int end, int lineNumber)> flatBoundsList = new List<(int start, int end, int lineNumber)>();
+foreach (List<(int start, int end, int lineNumber)> numbersBoundsList in numbersBoundsLists)
+{
+    foreach ((int start, int end, int lineNumber) bound in numbersBoundsList)
+    {
+        flatBoundsList.Add(bound);
+    }
+}
+
+
+lineNumber = 0;
+foreach (string line in input)
+{
+    for (int i = 0; i < line.Length - 1; i++)
+    {
+        char symbol = line[i];
+        if (symbol == '*')
+        {
+            object gear1Bound;
+            object gear2Bound;
+
+            if (i > 0)
+            {
+                
+
+            }
+        }
+}
+
+lineNumber++;
+}
