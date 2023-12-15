@@ -32,3 +32,29 @@ foreach (Hand hand in results)
 
 Console.WriteLine(winnings);
 Console.ReadLine();
+
+List<MutatingHand> mutatingHands = new List<MutatingHand>();
+
+foreach (string s in input)
+{
+    MutatingHand mutatingHand = new MutatingHand()
+    {
+        Cards = s.Split(" ").First(),
+        Bid = int.Parse(s.Split(" ").Last())
+    };
+    mutatingHands.Add(mutatingHand);
+}
+
+List<MutatingHand> mutatingResults = mutatingHands.OrderByDescending(h => h).ToList();
+
+int mutatingRank = 1;
+int mutatingWinnings = 0;
+foreach (MutatingHand hand in mutatingResults)
+{
+    //Console.WriteLine($"{hand.Cards}, {hand.Type()}");
+    mutatingWinnings += mutatingRank * hand.Bid;
+    mutatingRank++;
+}
+
+Console.WriteLine(mutatingWinnings);
+Console.ReadLine();
