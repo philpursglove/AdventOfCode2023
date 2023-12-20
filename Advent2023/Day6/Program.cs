@@ -43,13 +43,13 @@ Console.ReadLine();
 
 class Race
 {
-    public int Duration { get; set; }
+    public long Duration { get; set; }
     public long Record { get; set; }
-    public int WinningStrategies { get; set; }
+    public long WinningStrategies { get; set; }
 
     public void FindWinningStrategies()
     {
-        for (int i = 1; i < Duration - 1; i++)
+        for (int i = 1; i < (Duration - 1); i++)
         {
             var speed = i;
             var remainingDuration = Duration - i;
