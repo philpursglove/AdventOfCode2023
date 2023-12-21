@@ -141,7 +141,7 @@ class MutatingHand : Hand, IComparable<MutatingHand>
                 }
                 return HandType.TwoPair;
             case 4:
-                if (groups.Any(g => g.Card == 'J'))
+                if (groups.Any(g => g.Card == 'J' && g.Count == 1))
                 {
                     return HandType.ThreeOfAKind;
                 }
