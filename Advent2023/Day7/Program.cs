@@ -51,7 +51,10 @@ int mutatingRank = 1;
 int mutatingWinnings = 0;
 foreach (MutatingHand hand in mutatingResults)
 {
-    //Console.WriteLine($"{hand.Cards}, {hand.Type()}");
+    if ((hand.Type() == HandType.ThreeOfAKind) & hand.Cards.Contains('J'))
+    {
+        Console.WriteLine($"{hand.Cards}, {hand.Type()}");
+    }
     mutatingWinnings += mutatingRank * hand.Bid;
     mutatingRank++;
 }

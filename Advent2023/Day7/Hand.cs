@@ -121,16 +121,16 @@ class MutatingHand : Hand, IComparable<MutatingHand>
             case 3:
                 if (groups.First().Count == 3)
                 {
-                    if (groups.Any(g => g.Card == 'J' & g.Count == 1))
+                    if (Cards.Contains('J'))
                     {
                         return HandType.FourOfAKind;
                     }
+
                     return HandType.ThreeOfAKind;
                 }
 
-                if (groups.Any(g => g.Card == 'J'))
+                if (Cards.Contains('J'))
                 {
-
                     switch (groups.First(g => g.Card == 'J').Count)
                     {
                         case 2:
@@ -139,9 +139,10 @@ class MutatingHand : Hand, IComparable<MutatingHand>
                             return HandType.ThreeOfAKind;
                     }
                 }
+
                 return HandType.TwoPair;
             case 4:
-                if (groups.Any(g => g.Card == 'J' && g.Count == 1))
+                if (groups.Any(g => g.Card == 'J'))
                 {
                     return HandType.ThreeOfAKind;
                 }
